@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nianxi.mapper.ScMapper">
+    <update id="updateSc">
+        UPDATE sc SET sno = #{newSno} WHERE sno = #{oldSno};
+    </update>
+    <delete id="deleteSc">
+        DELETE FROM sc WHERE sno = #{sno};
+    </delete>
+
+    <select id="querySc" resultType="com.nianxi.entity.StuGradeVO" parameterType="string">
+        select s.sno as sno, s.sname as sname,  c.cno as cno, c.cname as cname, sc.grade as grade
+        from student s
+        left join sc on s.sno = sc.sno
+        left join course c on sc.cno = c.cno
+        where s.sno = #{sno}
+    </select>
+</mapper>

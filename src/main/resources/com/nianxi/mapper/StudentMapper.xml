@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nianxi.mapper.StudentMapper">
+    <insert id="addStudent">
+        insert into student(sno, sname, ssex, sage, sdept)
+        values(#{sno}, #{sname}, #{ssex}, #{sage}, #{sdept})
+    </insert>
+    <update id="disableForeignKeyChecks">
+        SET foreign_key_checks = 0;
+    </update>
+
+    <update id="enableForeignKeyChecks">
+        SET foreign_key_checks = 1;
+    </update>
+
+    <update id="updateStudent">
+        UPDATE student
+        <set>
+            <if test="student.sno != null">sno = #{student.sno},</if>
+            <if test="student.sname != null">sname = #{student.sname},</if>
+            <if test="student.ssex != null">ssex = #{student.ssex},</if>
+            <if test="student.sage != null">sage = #{student.sage},</if>
+            <if test="student.sdept != null">sdept = #{student.sdept},</if>
+        </set>
+        WHERE sno = #{oldSno};
+    </update>
+    <delete id="deleteStudent">
+        DELETE FROM student WHERE sno = #{sno};
+    </delete>
+
+
+    <select id="queryStudent" resultType="com.nianxi.entity.Student" parameterType="string">
+        select *
+        from student
+        where sno = #{id}
+    </select>
+    <select id="queryListStudent" resultType="com.nianxi.entity.Student">
+        select *
+        from student order by sno desc
+    </select>
+</mapper>
